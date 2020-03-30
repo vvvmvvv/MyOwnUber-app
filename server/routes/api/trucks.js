@@ -5,7 +5,7 @@ const Truck = require("../../models/Truck");
 router.get('/', verify, async (req, res) => {
     
     try{
-        const trucks = await Truck.find({driver: req.user._id});
+        const trucks = await Truck.find({created_by: req.user._id});
         res.json(trucks);
     }catch(err){
         res.json({message: err});

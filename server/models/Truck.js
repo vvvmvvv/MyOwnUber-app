@@ -25,6 +25,9 @@ const truckSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    payload: {
+        type: Number
+    },
     created_by: {
         type: mongoose.Types.ObjectId,
         required: true

@@ -4,7 +4,6 @@ import { Redirect, Link } from 'react-router-dom';
 const API_URL = 'http://localhost:8081';
 const LOGIN_API = `${API_URL}/api/user/login`;
 
-
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +11,12 @@ export default function Login() {
     
     const fetchLogin = async (e) => {
         e.preventDefault();
-        const token = await axios.post(LOGIN_API, {email, password});
+        const token = await axios.post(LOGIN_API, {email, password})
+        .then(
+            (user) => {
+                console.log(user);
+            }  
+        );
         localStorage.setItem('token', token.data);
         setRouteRedirect(true);
     }

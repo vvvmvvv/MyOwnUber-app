@@ -15,12 +15,9 @@ router.get('/', verify, async (req, res) => {
 router.post('/', verify, async (req, res) => {
     const load = new Load({
         title: req.body.title,
-        status: req.body.status,
-        state: req.body.state,
         dimensions: req.body.dimensions,
         payload: req.body.payload,
-        shipper: req.user._id,
-        loadAssigner: req.user._id
+        created_by: req.user._id
     });
 
     try{

@@ -16,10 +16,8 @@ router.post('/', verify, async (req, res) => {
     const truck = new Truck({
         title: req.body.title,
         type: req.body.type,
-        status: req.body.status,
         payload: req.body.payload,
-        driver: req.user._id,
-        truckAssigner: req.user._id
+        created_by: req.user._id
     });
 
     try{

@@ -14,7 +14,7 @@ const User = require("../../models/User");
 
 router.get('/:userId', verify, async (req, res) => {
     try{
-        const user = await Load.findById(req.params.userId);
+        const user = await User.findById(req.params.userId);
         res.json(user);
     }catch(err){
         res.json({message: err});
@@ -23,7 +23,7 @@ router.get('/:userId', verify, async (req, res) => {
 
 router.delete("/:userId", async (req, res) => {
     try{
-        const removedUser = await Load.deleteOne({_id: req.params.userId});
+        const removedUser = await User.deleteOne({_id: req.params.userId});
         res.json(removedUser);
     } catch(err){
         res.json({message: err});
@@ -32,7 +32,7 @@ router.delete("/:userId", async (req, res) => {
 
 router.put("/:userId", async (req, res) => {
     try{
-        const updatedUser = await Load.findByIdAndUpdate(req.params.userId,req.body);
+        const updatedUser = await User.findByIdAndUpdate(req.params.userId,req.body);
         res.json(updatedUser);
 
     }catch(err){

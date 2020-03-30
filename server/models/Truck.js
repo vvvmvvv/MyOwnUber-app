@@ -1,37 +1,37 @@
 const mongoose = require('mongoose');
 
+//-------------------------------------------------work flow with truck
+// status: IS(in service) ----------->>> OL(on load)
+
+// type:  - sprinter(300*250*170, 1700),
+//        - small straight(500*250*170, 2500),
+//        - large straight(700*350*200, 4000) 
+//--------------------------------------------------------------------
+
+
 const truckSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        min: 6,
+        min: 3,
         max: 255
     },
     status: {
         type: String,
         required: true,
-        max: 200,
-        min: 1
+        default: 'IS'
     },
-    types: {
+    type: {
         type: String,
         required: true
     },
-    payload: {
-        type: String,
-        required: true
-    },
-    dimensions: {
-        type: String,
-        required: true
-    }, 
-    driver: {
+    created_by: {
         type: mongoose.Types.ObjectId,
         required: true
     },
-    truckAssigner: {
+    assigned_to: {
         type: mongoose.Types.ObjectId,
-        required: true
+        default: null
     },
     dates: {
         type: Date,

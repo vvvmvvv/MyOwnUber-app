@@ -54,6 +54,21 @@ router.put("/:truckId", async (req, res) => {
     }catch(err){
         res.json({message: err});
     }
-})
+});
+
+router.post("/assign/:truckId", async (req, res) => {
+    try {
+        const truck = await Load.findById(req.params.truckId);
+        if (truck.status === 'IS') {
+                res.json(truck);
+        } else {
+                return res.status(400).send("TRUCK WITH STATUS -IS- NOT FOUND!");
+        }
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
 
 module.exports = router;

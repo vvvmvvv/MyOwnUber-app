@@ -17,7 +17,7 @@ const registerValidation = (data) => {
             .max(50)
             .required()
     };
-    return Joi.validate(data, schema);
+    return Joi.valid(data, schema);
 };
 
 const loginValidation = (data) => {
@@ -32,7 +32,7 @@ const loginValidation = (data) => {
             .max(50)
             .required()
     };
-    return Joi.validate(data, schema);
+    return Joi.valid(data, schema);
 };
 
 module.exports.registerValidation = registerValidation;

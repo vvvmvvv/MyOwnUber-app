@@ -48,10 +48,14 @@ router.get('/:loadId', verify, async (req, res) => {
 
 router.delete("/:loadId", async (req, res) => {
     try {
+        if(load.status === 'NEW'){
         const removedLoad = await Load.deleteOne({
             _id: req.params.loadId
         });
         res.json(removedLoad);
+    }else{
+        return res.status(400).send("LOAD WITH STATUS -NEW- NOT FOUND!");
+    }
     } catch (err) {
         res.json({
             message: err
@@ -79,8 +83,12 @@ router.put("/post/:loadId", async (req, res) => {
                 status: "POSTED"
             }
         });
-        res.json(postedLoad);
+        const readyTruck = await Truck.findOne({
+            status: "IS"
+        });
 
+        const resPost = {postedLoad: readyTruck};
+        res.json(resPost);
     } catch (err) {
         res.json({
             message: err
@@ -125,6 +133,6 @@ router.post("/assign/:loadId", async (req, res) => {
             message: err
         });
     }
-})
+});
 
 module.exports = router;

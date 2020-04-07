@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const PORT = 8081;
+const PORT = 5000;
 
 const authRoute = require('./routes/api/auth');
 const truckRoute = require('./routes/api/trucks');
@@ -16,8 +16,9 @@ mongoose.connect(process.env.DB_CONNECT, { useFindAndModify: false, useNewUrlPar
     console.log("Database connected!")
 );
 
-app.use(express.json());
+app.use(express.json({ extended: false }))
 app.use(cors());
+
 app.use('/api/user', authRoute);
 app.use('/api/trucks', truckRoute);
 app.use('/api/loads', loadRoute);

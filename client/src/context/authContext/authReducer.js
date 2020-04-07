@@ -35,6 +35,14 @@ import {
         }
       case REGISTER_FAIL:
       case UPDATE_PROFILE:
+        if (payload.logout) {
+          localStorage.setItem('token', payload.token);
+        }
+        return {
+          ...state,
+          user: payload.user,
+          isAuthencated: !payload.logout
+        }
       case PROFILE_ERROR:
       case LOGIN_FAIL:
       case AUTH_ERROR:

@@ -27,7 +27,7 @@ const LoadItem = ({ load }) => {
         </div>
       </div>
       <div>
-        <h2>{title}</h2>
+        <h2>{load.title}</h2>
          <span>{dimension}</span>
         <div>
           <p>{payload}</p>

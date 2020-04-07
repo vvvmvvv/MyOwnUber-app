@@ -8,36 +8,40 @@ const Profile = (props) => {
 
   const { user, loadUser, updateProfile, deleteShipper } = useContext(AuthContext);
   const [routeRedirect, setRouteRedirect] = useState(false);
+  const [updUser, setUpdUser] = useState({
+    name: '',
+    password: '',
+    newPassword: '',
+    newPasswordConfirmation: ''
+  });
 
   useEffect(() => {
     loadUser();
     // eslint-disable-next-line
   }, [])
 
-  // useEffect(() => {
-  //   if (!isAuthencated || !user) {
-  //     props.history.push('/');
-  //     setRouteRedirect(true);
-  //   }
-  //   // eslint-disable-next-line
-  // }, [isAuthencated, props.history])
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
 
-  const [updUser, setUpdUser] = useState({name: '',password: ''});
-
-
- const { name, password, password2 } = user;
+    setUpdUser({
+      ...updUser,
+      name: user.name
+    });
+  }, [user]);
 
   const onchange = e => {
     setUpdUser({
       ...updUser,
       [e.target.name]: e.target.value
-})
+    });
   };
 
   const onsubmit = (e) => {
     e.preventDefault();
-    if (user.password === user.password2) {
-        updateProfile({updUser});
+    if (updUser.newPassword === updUser.newPasswordConfirmation) {
+        updateProfile(user._id,updUser);
       }
   };
 
@@ -52,6 +56,10 @@ const redirect = routeRedirect;
         return <Redirect to='/login' />
   }
 
+  if (!user) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
     <div className="container">
@@ -61,20 +69,24 @@ const redirect = routeRedirect;
     <h3>Name: {user.name}</h3>
     <h3>Email: {user.email}</h3>
     <div className="jumbotron">
-    <form onSubmit={onsubmit}>
+    <form onSubmit={onsubmit} autoComplete="off">
         <hr/>
             <h3>Update Profile Info:</h3>
             <div className="form-group">
             <label htmlFor="exampleInputName">Enter new name:</label>
-                <input type="text" name="name" placeholder="Enter name" value={name} onChange={onchange} className="form-control" id="exampleInputName"  required />
+                <input type="text" name="name" placeholder="Enter name" value={updUser.name} onChange={onchange} className="form-control" id="exampleInputName"  required />
+            </div>
+            <div className="form-group">
+                <label htmlFor="exampleInputPassword1"> Old password:</label>
+                <input type="password" name="password" value={updUser.password} onChange={onchange} className="form-control" id="exampleInputPassword1" placeholder="Enter password" required={updUser.newPassword} />
             </div>
             <div className="form-group">
                 <label htmlFor="exampleInputPassword1">Enter new password:</label>
-                <input type="password" name="password" value={password} onChange={onchange} className="form-control" id="exampleInputPassword1" placeholder="Enter password" required/>
+                <input type="password" name="newPassword" value={updUser.newPassword} onChange={onchange} className="form-control" id="exampleInputPassword1" placeholder="Enter password" />
             </div>
             <div className="form-group">
                 <label htmlFor="exampleInputPassword2">Confirm new password:</label>
-                <input type="password" name="password2" placeholder="Enter confirmed password" className="form-control" id="exampleInputPassword2" value={password2} onChange={onchange} required />
+                <input type="password" name="newPasswordConfirmation" placeholder="Enter confirmed password" className="form-control" id="exampleInputPassword2" value={updUser.newPasswordConfirmation} onChange={onchange} required={updUser.newPassword} />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
             </form>

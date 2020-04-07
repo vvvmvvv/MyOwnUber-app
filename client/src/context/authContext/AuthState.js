@@ -19,8 +19,8 @@ import {
 } from '../types';
 
 const API_URL = 'http://localhost:5000';
-const LOGIN_API = `${API_URL}/api/user/login`;
-const REGISTER_API = `${API_URL}/api/user/register`;
+const LOGIN_API = `${API_URL}/api/auth/login`;
+const REGISTER_API = `${API_URL}/api/auth/register`;
 const PROFILE_API = `${API_URL}/api/user`;
 
 
@@ -93,20 +93,19 @@ const AuthState = (props) => {
     }
   }
 
-  const updateProfile = async (user) => {
+  const updateProfile = async (id, user) => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
     try {
-      const res = await axios.put(`${PROFILE_API}/${user._id}`, user, config)
+      const res = await axios.put(`${PROFILE_API}/${id}`, user, config)
+      console.log(res);
       dispatch({
         type: UPDATE_PROFILE,
         payload: res.data
       });
-      getProfile();
-
     } catch (err) {
       dispatch({
         type: PROFILE_ERROR,
@@ -116,7 +115,6 @@ const AuthState = (props) => {
   }
 
   const deleteShipper = async (id) => {
-    const token = localStorage.getItem('token');
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -132,6 +130,7 @@ const AuthState = (props) => {
         payload: id
       })
     } catch (err) {
+      console.log(err);
       dispatch({
         type: PROFILE_ERROR,
         payload: err.response.msg

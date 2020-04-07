@@ -10,12 +10,23 @@ import LoadContext from '../../context/loadContext/loadContext';
 const Load = () => {
   return(
     <>
+    <h1>SHIPPER`S MENU </h1>
+    <h3>working with load</h3>
     <div className="filter">
           <SearchLoad />
     </div>
         <LoadForm />
         <hr/>
         <LoadsList />
+    </>
+  )
+}
+
+const Truck = () => {
+  return(
+    <>
+    <h1>TRUCK`S MENU</h1>
+    <h3>working with truck</h3>
     </>
   )
 }
@@ -30,8 +41,6 @@ const Home = () => {
 
   return (
     <div className="container">
-      <h1>SHIPPER`S MENU </h1>
-      <h3>working with load</h3>
       <div className="jumbotron">
 
         {user && user.role === "DRIVER" ? <p>DRIVER MENU</p> : <Load/> }
